@@ -580,7 +580,6 @@ int download_file(char* name, char* outname)
 	FILE *ext=fopen(outname, "wb");
 	
 	uint32_t pos=fat[fatnr].inodes[inodenr].begin;
-	fseek(fs, pos*BLOCK_SIZE, SEEK_SET);
 	
 	block tb;
 	
@@ -588,6 +587,7 @@ int download_file(char* name, char* outname)
 	
 	while(pos!=0)
 	{
+		fseek(fs, pos*BLOCK_SIZE, SEEK_SET);
 		fread(&tb, BLOCK_SIZE, 1, fs);
 		
 		out+=tb.used_space;
